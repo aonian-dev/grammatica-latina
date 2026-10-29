@@ -158,8 +158,6 @@ The reader prepares display items from each book's data and uses a virtualised l
 - **Prose:** numbered sections, with paragraphs and spacing suited to continuous reading.
 - **Theatre:** speeches with the character's name and associated text.
 
-In the first book of the Latin Aeneid, the introductory lines before “Arma virumque cano” remain visible but are excluded from verse numbering.
-
 Display transformations do not rewrite the source texts. Premium access is checked before a book is shown.
 
 ### 7. Local state and progress
@@ -382,8 +380,6 @@ Il lettore prepara gli elementi da visualizzare a partire dai dati del libro e u
 - **Poesia:** blocchi di cinque versi con intervallo numerico laterale. I versi mantengono gli a capo originali e il testo non è racchiuso in card.
 - **Prosa:** sezioni numerate, con paragrafi e separazioni adatte alla lettura continua.
 - **Teatro:** battute con nome del personaggio e testo associato.
-
-Nel primo libro dell'Eneide latina, le righe introduttive precedenti ad “Arma virumque cano” restano visibili senza entrare nella numerazione dei versi.
 
 La trasformazione per la visualizzazione non riscrive i testi sorgente. Gli accessi ai contenuti Premium vengono controllati prima di mostrare il libro.
 
