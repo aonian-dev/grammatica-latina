@@ -8,6 +8,72 @@ This document describes the app's current structure: interface, navigation, cont
 
 It deliberately excludes credentials, account and service identifiers, environment addresses, signing configuration, and private operational details. The source code and text collection are not included in this repository.
 
+### File map and internal logic
+
+Paths below refer to the private codebase; the files themselves are not published here. The main app lives in **artifacts/grammatica-latina/**. This map groups the main files rather than listing every literary text or asset.
+
+~~~text
+artifacts/grammatica-latina/
+├── app/
+│   ├── _layout.tsx                 App startup, shared providers and navigation stack
+│   ├── (tabs)/
+│   │   ├── _layout.tsx             Bottom-tab navigation
+│   │   ├── index.tsx               Grammar categories
+│   │   ├── testi.tsx               Authors for guided text analysis
+│   │   ├── strumenti.tsx           Reference-tool menu
+│   │   ├── biblioteca.tsx          Library author catalogue and Premium entry point
+│   │   └── ricerca.tsx             Local grammar search
+│   ├── categoria/[id].tsx          Topics within a grammar category
+│   ├── argomento/[id].tsx          Grammar lesson, examples and tables
+│   ├── testi/[autore].tsx          Analysed passages by author
+│   ├── testo/[id].tsx              Passage and its analysis
+│   ├── autore/[id].tsx             Library author and works
+│   ├── opera/[id].tsx              Books belonging to a work
+│   ├── libro/[id].tsx              Access check and poetry/prose/theatre reader
+│   ├── strumenti/                 Paradigms, declensions, conjugations and dictionary screens
+│   └── paywall.tsx                 Premium presentation, purchase and restoration
+├── data/
+│   ├── grammar.ts                 Grammar topics and explanations
+│   ├── texts.ts                   Selected passages and analyses
+│   ├── library.ts                 Author/work/book catalogue and lookup helpers
+│   ├── library/                   Text modules for individual books and editions
+│   ├── paradigms.ts               Verb paradigms
+│   ├── declensions.ts             Declension data
+│   ├── conjugations.ts            Conjugation data
+│   └── vocabulary.ts              Dictionary entries
+├── components/                    Reusable visual and behaviour components
+├── context/ProgressContext.tsx     Shared, locally persisted study progress
+├── hooks/useColors.ts             Palette selected from device appearance
+├── hooks/useAds.ts                Advertising initialisation based on Premium status
+├── lib/revenuecat.tsx             Purchase SDK, queries, mutations and subscription context
+├── lib/premiumGating.ts           Free-book access rules
+├── lib/ads.native.ts              Native advertising adapter
+├── lib/ads.ts                     Non-native advertising adapter
+├── constants/colors.ts            Light/dark colour tokens
+├── constants/typography.ts        Shared text styles
+├── assets/                        Fonts, images and store artwork
+├── scripts/                       Content and build utilities
+├── server/serve.js                Static-resource, manifest and landing-page server
+├── package.json                   Dependencies and development commands
+├── app.json                       Expo and native app configuration
+└── eas.json                       Store-build configuration
+~~~
+
+**Key shared components:** SectionHero.tsx renders section headers; FormattedText.tsx handles formatted explanations; HorizontalTableScroller.tsx handles wide tables; SearchBar.tsx provides the search input. TopicCard.tsx, AuthorCard.tsx and TextCard.tsx support grammar and guided-text browsing. Library author, work and book cards are currently defined directly in their respective screens. AdBanner.tsx renders banners, while AdInterstitial.ts manages interstitial loading and display. ErrorBoundary.tsx and ErrorFallback.tsx provide an application error boundary and fallback view.
+
+**How the pieces work together:**
+
+1. **Startup:** app/_layout.tsx initialises RevenueCat, loads fonts, handles the splash screen and mounts providers for queries, purchases, progress, safe areas and navigation.
+2. **Navigation:** Expo Router maps files in app/ to screens. A card passes an author, work, book or topic ID; the destination uses that ID to look up the corresponding local data.
+3. **Content:** screens read data modules and hand the results to shared components. Grammar and guided passages use their own datasets; the Library uses data/library.ts and its imported book modules.
+4. **Reading:** libro/[id].tsx checks access, transforms the book's text into display items and renders a virtualised list. Poetry becomes five-line blocks; prose and theatre follow separate rendering branches. The original data is not modified.
+5. **Progress and search:** ProgressContext.tsx loads and saves study progress using AsyncStorage. Search filters grammar data locally; there is no server request for each query.
+6. **Premium:** revenuecat.tsx exposes purchase state and operations through useSubscription(). paywall.tsx starts purchase or restore operations; successful operations refresh customer information. premiumGating.ts supplies free-access rules, which the book screens combine with Premium status.
+7. **Advertising:** useAds.ts waits for a confirmed non-Premium status before initialisation. The platform adapters isolate native-only code; banner and interstitial components manage their own presentation. Content screens notify the interstitial controller when eligible content is closed.
+8. **Theme:** useColors.ts selects the palette from constants/colors.ts. Screens combine it with shared typography and component styles.
+
+**Outside the mobile app:** artifacts/api-server/src/app.ts and routes/ define the small Express service; lib/api-spec/, lib/api-client-react/ and lib/api-zod/ contain the API contract, generated client and validation package. These support the workspace but are not the source of the locally bundled reading content.
+
 ### 1. Overview
 
 Grammatica Latina is primarily a mobile app that handles navigation, content browsing, and reading on the device. Educational and literary material is bundled with the app as structured data. It is not downloaded from a remote catalogue each time the app opens.
@@ -165,6 +231,72 @@ This documentation explains how the components work together. It is not a substi
 Questo documento descrive la struttura attuale dell'app: interfaccia, navigazione, contenuti, stato locale, acquisti, pubblicità e distribuzione. È una descrizione tecnica destinata al portfolio, non una copia del progetto privato.
 
 Per ragioni di riservatezza non riporta credenziali, identificativi degli account e dei servizi, indirizzi degli ambienti, configurazioni di firma o dettagli operativi privati. Il codice e il catalogo dei testi non sono inclusi nel repository.
+
+### Mappa dei file e logica interna
+
+I percorsi seguenti si riferiscono al codice privato: i file non vengono pubblicati in questo repository. L'app principale si trova in **artifacts/grammatica-latina/**. La mappa raggruppa i file principali, senza elencare ogni testo letterario o risorsa.
+
+~~~text
+artifacts/grammatica-latina/
+├── app/
+│   ├── _layout.tsx                 Avvio, provider condivisi e navigazione a stack
+│   ├── (tabs)/
+│   │   ├── _layout.tsx             Navigazione delle schede inferiori
+│   │   ├── index.tsx               Categorie grammaticali
+│   │   ├── testi.tsx               Autori delle versioni analizzate
+│   │   ├── strumenti.tsx           Menu degli strumenti di consultazione
+│   │   ├── biblioteca.tsx          Catalogo autori e accesso alla schermata Premium
+│   │   └── ricerca.tsx             Ricerca locale nella grammatica
+│   ├── categoria/[id].tsx          Argomenti di una categoria grammaticale
+│   ├── argomento/[id].tsx          Lezione, esempi e tabelle
+│   ├── testi/[autore].tsx          Brani analizzati di un autore
+│   ├── testo/[id].tsx              Brano e relativa analisi
+│   ├── autore/[id].tsx             Autore della Biblioteca e sue opere
+│   ├── opera/[id].tsx              Libri appartenenti a un'opera
+│   ├── libro/[id].tsx              Verifica accesso e lettore poesia/prosa/teatro
+│   ├── strumenti/                 Schermate paradigmi, declinazioni, coniugazioni e vocabolario
+│   └── paywall.tsx                 Presentazione Premium, acquisto e ripristino
+├── data/
+│   ├── grammar.ts                 Argomenti e spiegazioni grammaticali
+│   ├── texts.ts                   Brani selezionati e analisi
+│   ├── library.ts                 Catalogo autori/opere/libri e funzioni di ricerca per ID
+│   ├── library/                   Testi dei singoli libri e delle diverse edizioni
+│   ├── paradigms.ts               Paradigmi verbali
+│   ├── declensions.ts             Dati delle declinazioni
+│   ├── conjugations.ts            Dati delle coniugazioni
+│   └── vocabulary.ts              Voci del vocabolario
+├── components/                    Componenti riutilizzabili di interfaccia e comportamento
+├── context/ProgressContext.tsx     Progressi condivisi e salvati sul dispositivo
+├── hooks/useColors.ts             Scelta della palette in base al tema del dispositivo
+├── hooks/useAds.ts                Avvio della pubblicità in base allo stato Premium
+├── lib/revenuecat.tsx             SDK acquisti, query, operazioni e contesto condiviso
+├── lib/premiumGating.ts           Regole dei libri accessibili gratuitamente
+├── lib/ads.native.ts              Adattatore pubblicitario nativo
+├── lib/ads.ts                     Adattatore pubblicitario per ambienti non nativi
+├── constants/colors.ts            Colori del tema chiaro e scuro
+├── constants/typography.ts        Stili tipografici condivisi
+├── assets/                        Font, immagini e materiali per lo store
+├── scripts/                       Utilità per contenuti e build
+├── server/serve.js                Server risorse statiche, manifest e pagina di presentazione
+├── package.json                   Dipendenze e comandi di sviluppo
+├── app.json                       Configurazione Expo e dell'app nativa
+└── eas.json                       Configurazione delle build per lo store
+~~~
+
+**Componenti condivisi principali:** SectionHero.tsx presenta gli header; FormattedText.tsx gestisce le spiegazioni formattate; HorizontalTableScroller.tsx gestisce le tabelle larghe; SearchBar.tsx fornisce il campo di ricerca. TopicCard.tsx, AuthorCard.tsx e TextCard.tsx supportano grammatica e versioni. Le card di autori, opere e libri della Biblioteca sono invece definite direttamente nelle rispettive schermate. AdBanner.tsx presenta i banner, mentre AdInterstitial.ts gestisce caricamento e visualizzazione degli interstitial. ErrorBoundary.tsx ed ErrorFallback.tsx forniscono la gestione degli errori di rendering e la schermata di recupero.
+
+**Come collaborano i file:**
+
+1. **Avvio:** app/_layout.tsx inizializza RevenueCat, carica i font, gestisce la schermata iniziale e monta i provider per query, acquisti, progressi, aree sicure e navigazione.
+2. **Navigazione:** Expo Router associa i file di app/ alle schermate. Una card passa l'ID di autore, opera, libro o argomento; la destinazione usa quell'ID per recuperare i dati locali corrispondenti.
+3. **Contenuti:** le schermate leggono i moduli di dati e li presentano tramite componenti condivisi. Grammatica e versioni hanno dataset distinti; la Biblioteca usa data/library.ts e i moduli dei libri che questo importa.
+4. **Lettura:** libro/[id].tsx verifica l'accesso, trasforma il testo in elementi da visualizzare e usa una lista virtualizzata. La poesia diventa blocchi di cinque versi; prosa e teatro seguono rami di rendering distinti. I dati originali non vengono modificati.
+5. **Progressi e ricerca:** ProgressContext.tsx carica e salva i progressi con AsyncStorage. La ricerca filtra localmente i dati grammaticali, senza richieste al server per ogni parola cercata.
+6. **Premium:** revenuecat.tsx espone stato e operazioni tramite useSubscription(). paywall.tsx avvia acquisto o ripristino; dopo un'operazione riuscita vengono aggiornate le informazioni cliente. premiumGating.ts definisce gli accessi gratuiti, che le schermate dei libri combinano con lo stato Premium.
+7. **Pubblicità:** useAds.ts attende che l'utente risulti non Premium prima di inizializzare gli annunci. Gli adattatori separano il codice esclusivamente nativo; banner e interstitial gestiscono la propria visualizzazione. Le schermate notificano al controller interstitial la chiusura dei contenuti idonei.
+8. **Tema:** useColors.ts seleziona la palette da constants/colors.ts. Le schermate la combinano con la tipografia condivisa e gli stili dei componenti.
+
+**Fuori dall'app mobile:** artifacts/api-server/src/app.ts e routes/ definiscono il piccolo servizio Express; lib/api-spec/, lib/api-client-react/ e lib/api-zod/ contengono contratto API, client generato e pacchetto di validazione. Sono parti di supporto del workspace, non la sorgente dei contenuti di lettura inclusi nell'app.
 
 ### 1. Vista d'insieme
 
