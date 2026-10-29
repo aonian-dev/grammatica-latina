@@ -160,15 +160,7 @@ The reader prepares display items from each book's data and uses a virtualised l
 
 Display transformations do not rewrite the source texts. Premium access is checked before a book is shown.
 
-### 7. Local state and progress
-
-Temporary screen state, such as the search query, uses standard React state management. Study progress is shared through a context and saved with AsyncStorage.
-
-The local model includes visited topics, study time, and information about study days. There is currently no cross-device progress synchronisation or dedicated app account for storing progress in the cloud.
-
-Grammar search filters local data. It does not depend on a remote search engine and does not search across all literary texts.
-
-### 8. Premium purchase
+### 7. Premium purchase
 
 Premium is a one-time purchase. RevenueCat provides available offerings and the user's entitlement status through its integration with the platform store.
 
@@ -184,7 +176,7 @@ Restoring purchases uses the same service and refreshes the shared state. Purcha
 
 The first four books of the Aeneid are free in both languages. The rest of the Library requires Premium. Interface access checks should not be described as encryption or DRM protection for bundled texts.
 
-### 9. Advertising
+### 8. Advertising
 
 The app integrates banners and interstitial ads through Google AdMob. Interstitials are tied to closing content, with frequency and timing conditions that limit how often they appear.
 
@@ -192,13 +184,13 @@ Premium status is also shared with the advertising system. Ads are avoided for P
 
 The advertising integration distinguishes supported native environments from web and Expo Go previews, where native modules may be unavailable. A preview is therefore not equivalent to the behaviour of the distributed Android build.
 
-### 10. Interface and shared components
+### 9. Interface and shared components
 
 Colours and typography are centralised. Screens use light or dark themes and shared components for recurring elements such as headers, formatted text, tables, and advertising.
 
 Safe areas, margins, and scrolling account for device dimensions. Long content is presented in lists or scrollable screens. The aim is to separate content from layout without duplicating data across screens.
 
-### 11. Supporting services and networking
+### 10. Supporting services and networking
 
 The workspace's Express service currently exposes a health check. It is not a complete backend for users, purchases, or the catalogue.
 
@@ -206,7 +198,7 @@ A separate Node.js server can serve the landing page, static assets, and manifes
 
 Bundled texts and materials do not need to be downloaded for each reading session. Purchases, restoration, Premium status updates, and advertising depend on their respective network services. The app should therefore not be described as fully independent of an internet connection.
 
-### 12. Build and distribution
+### 11. Build and distribution
 
 Development uses Expo and Metro, with native and web previews. Features that depend on native modules or stores must also be checked in an appropriate build, not only in a preview.
 
@@ -214,7 +206,7 @@ For Android, the production configuration generates an **Android App Bundle (AAB
 
 The portfolio repository contains no release workflows, signing keys, service configuration, or binary packages. The Google Play availability statement describes planned distribution; it does not certify that publication has already taken place.
 
-### 13. Limits and boundaries
+### 12. Limits and boundaries
 
 The current architecture does not include a real-time remote catalogue, cloud progress synchronisation, or an app-account system. Expo's cross-platform structure does not imply that every platform is ready for publication.
 
@@ -383,15 +375,7 @@ Il lettore prepara gli elementi da visualizzare a partire dai dati del libro e u
 
 La trasformazione per la visualizzazione non riscrive i testi sorgente. Gli accessi ai contenuti Premium vengono controllati prima di mostrare il libro.
 
-### 7. Stato locale e progressi
-
-Lo stato temporaneo delle schermate, come il testo di ricerca, è gestito con gli strumenti standard di React. I progressi di studio sono condivisi attraverso un contesto e salvati con AsyncStorage.
-
-Il modello locale comprende argomenti visitati, tempo di studio e informazioni sulle giornate di studio. Non esiste attualmente una sincronizzazione di questi progressi tra dispositivi né un account applicativo dedicato per conservarli nel cloud.
-
-La ricerca degli argomenti grammaticali filtra i dati locali. Non dipende da un motore di ricerca remoto e non effettua una ricerca globale in tutti i testi letterari.
-
-### 8. Acquisto Premium
+### 7. Acquisto Premium
 
 Premium è un acquisto una tantum. RevenueCat fornisce all'app le offerte disponibili e lo stato del diritto di accesso dell'utente, collegandosi allo store della piattaforma.
 
@@ -407,7 +391,7 @@ Il ripristino degli acquisti utilizza lo stesso servizio e aggiorna nuovamente l
 
 I primi quattro libri dell'Eneide, in entrambe le lingue, sono gratuiti. Il resto della Biblioteca richiede Premium. Il controllo di accesso nell'interfaccia non va presentato come cifratura o protezione DRM dei testi inclusi nell'app.
 
-### 9. Pubblicità
+### 8. Pubblicità
 
 L'app integra banner e interstitial tramite Google AdMob. Gli interstitial sono collegati alla chiusura dei contenuti, con condizioni di frequenza e distanza temporale per limitarne la comparsa.
 
@@ -415,13 +399,13 @@ Lo stato Premium viene condiviso anche con il sistema pubblicitario. Gli annunci
 
 L'integrazione pubblicitaria distingue gli ambienti nativi supportati dalle anteprime web ed Expo Go, dove i moduli nativi possono non essere disponibili. Un'anteprima non è quindi equivalente al comportamento della build Android distribuita.
 
-### 10. Interfaccia e componenti condivisi
+### 9. Interfaccia e componenti condivisi
 
 Colori e tipografia sono centralizzati. Le schermate usano il tema chiaro o scuro e componenti condivisi per elementi ricorrenti, come intestazioni, testo formattato, tabelle e pubblicità.
 
 Le aree sicure, i margini e lo scorrimento tengono conto delle dimensioni del dispositivo. I contenuti lunghi vengono presentati con liste o schermate scorrevoli. L'obiettivo è separare il contenuto dalla sua impaginazione, senza duplicare i dati nelle schermate.
 
-### 11. Servizi di supporto e rete
+### 10. Servizi di supporto e rete
 
 Il servizio Express del workspace espone attualmente una verifica di disponibilità. Non è un backend completo per utenti, acquisti o catalogo.
 
@@ -429,7 +413,7 @@ Un server Node.js separato può servire la pagina di presentazione, le risorse s
 
 I testi e i materiali inclusi non richiedono di essere scaricati a ogni consultazione. Acquisti, ripristino, aggiornamento dello stato Premium e pubblicità dipendono invece dai rispettivi servizi di rete: l'app non va descritta come interamente indipendente dalla connessione.
 
-### 12. Build e distribuzione
+### 11. Build e distribuzione
 
 Lo sviluppo utilizza Expo e Metro, con anteprime native e web. Le funzioni che dipendono da moduli nativi o dagli store devono essere verificate anche in una build appropriata, non soltanto nell'anteprima.
 
@@ -437,7 +421,7 @@ Per Android, la configurazione di produzione genera un **Android App Bundle (AAB
 
 Il repository portfolio non contiene workflow di rilascio, chiavi di firma, configurazioni dei servizi o pacchetti binari. La documentazione della disponibilità su Google Play indica una distribuzione prevista, non certifica che la pubblicazione sia già avvenuta.
 
-### 13. Limiti e confini
+### 12. Limiti e confini
 
 L'architettura attuale non comprende un catalogo remoto aggiornabile in tempo reale, una sincronizzazione cloud dei progressi o un sistema di account applicativi. La struttura multipiattaforma di Expo non implica che ogni piattaforma sia già pronta per la pubblicazione.
 
