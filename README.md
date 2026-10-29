@@ -2,7 +2,7 @@
 
 ## English
 
-Grammatica Latina is a mobile app for studying Latin and reading classical literature. It brings grammar lessons, guided text analysis, reference tools, and a reading library into one place. The interface is in Italian.
+Grammatica Latina is a mobile app for studying Latin and reading classical literature. It brings grammar lessons, reference tools and a reading library into one place. The interface is in Italian.
 
 ### What the app includes
 
