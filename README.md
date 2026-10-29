@@ -30,7 +30,7 @@ The Android app (APK) will be available through the **Google Play Store**. The s
 
 This is a documentation-only portfolio repository. It contains a description of the product and its architecture, not the application source code, literary texts, build files, or service configuration.
 
-The app is built with **React Native, Expo, and TypeScript**, with **RevenueCat** for in-app purchases and **Google AdMob** for advertising. See [ARCHITECTURE.md](ARCHITECTURE.md) for the technical description, written in Italian.
+The app is built with **React Native, Expo, and TypeScript**, with **RevenueCat** for in-app purchases and **Google AdMob** for advertising. See [ARCHITECTURE.md](ARCHITECTURE.md) for the technical description.
 
 ---
 
