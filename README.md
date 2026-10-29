@@ -46,8 +46,6 @@ Grammatica Latina è un'app mobile per studiare il latino e leggere la letteratu
 - **Biblioteca:** una selezione di opere di Virgilio, Ovidio, Apuleio, Seneca e Lucano, in latino e in traduzione italiana.
 - **Ricerca:** ricerca negli argomenti grammaticali e nelle relative spiegazioni.
 
-Il lettore presenta poesia, prosa e teatro con impaginazioni diverse. I testi poetici sono raggruppati in blocchi di cinque versi, con gli intervalli numerici a lato. L'app supporta il tema chiaro e scuro e conserva i progressi di studio sul dispositivo.
-
 ### Accesso gratuito e Premium
 
 L'app è gratuita con pubblicità. I primi quattro libri dell'Eneide sono accessibili in latino e in italiano senza acquistare Premium.
